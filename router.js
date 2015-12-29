@@ -11,7 +11,7 @@ var home=function(httpRequest,httpResponse){
 		httpResponse.end();
 	}
 }
-//2.  if the urls is "/...."  POST 
+//2.  if the urls is "/...."   
 var user=function(httpRequest,httpResponse){
 	var userName=httpRequest.url.replace("/","");
 	if(userName.length > 0){
@@ -33,8 +33,14 @@ var user=function(httpRequest,httpResponse){
 			httpResponse.end();
 		});
 		studentProfile.on("error", function(error){
-			httpResponse.write(error.message+'\n');
-			httpResponse.end('FOOTER');
+			console.log(error.message);
+			var myerror={}
+			myerror.message=error.message;
+			render.view('header',{},httpResponse);
+			render.view('error',myerror,httpResponse);
+			render.view('search',{},httpResponse);
+			render.view('footer',{},httpResponse);
+			httpResponse.end();
 		});
 
 		//httpResponse.write(userName+'\n');
